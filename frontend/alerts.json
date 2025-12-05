@@ -1,0 +1,21 @@
+[
+  {
+    "id": "alert1",
+    "snapshot": "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
+    "location": "Entrance Gate A",
+    "confidence": 91
+  },
+  {
+    "id": "alert2",
+    "snapshot": "https://images.pexels.com/photos/430208/pexels-photo-430208.jpeg",
+    "location": "Parking Lot B",
+    "confidence": 87
+  },
+  {
+    "id": "alert3",
+    "snapshot": "https://images.pexels.com/photos/242236/pexels-photo-242236.jpeg",
+    "location": "Back Door",
+    "confidence": 95
+  }
+]
+
