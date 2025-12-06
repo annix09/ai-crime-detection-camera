@@ -1,0 +1,40 @@
+<!-- backend/templates/review.html -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="p-6">
+  <div id="content"></div>
+
+<script>
+async function load(){
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  // fetch all alerts and find the one
+  const res = await fetch('/api/alerts');
+  const data = await res.json();
+  const a = data.find(x => x.id === id);
+  if(!a){ document.getElementById('content').innerHTML='Alert not found'; return; }
+  document.getElementById('content').innerHTML = `
+    <h2 class="text-xl mb-2">Alert: ${a.cls}</h2>
+    <div>Location: ${a.location}</div>
+    <div>Confidence: ${Math.round(a.confidence*100)}%</div>
+    <div style="margin-top:10px;"><img src="data:image/jpeg;base64,${a.frame_b64}" width="320"></div>
+    <div style="margin-top:10px;">
+      <button onclick="doAction('${a.id}','confirm')" class="px-3 py-1 bg-green-600 text-white rounded">Confirm</button>
+      <button onclick="doAction('${a.id}','reject')" class="px-3 py-1 bg-red-600 text-white rounded">Reject</button>
+    </div>
+  `;
+}
+async function doAction(id, action){
+  await fetch('/api/alerts/'+id+'/action', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({action: action, reviewer: 'reviewer1'})
+  });
+  alert('Done: ' + action);
+  window.close();
+}
+load();
+</script>
+</body>
+</html>
